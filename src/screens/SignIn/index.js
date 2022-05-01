@@ -3,7 +3,6 @@ import {Alert} from "react-native";
 import {
     Container,
     AreaWelcome,
-    TitleWelcome,
     SubTitle,
     InputArea,
     SignMessageButton,
@@ -17,28 +16,26 @@ import {
 import Api from "../../Api"
 import StatusBar from "../../components/StatusBar";
 import Input from "../../components/Input.js";
-import SvgLoading from '../../assets/svgLoading.svg';
+import SvgLoading from '../../assets/svgLogin.svg';
 import { useNavigation } from "@react-navigation/native";
-import {validatePassWord, validateEmail} from "../../Functions";
+import {validatePassword, validateEmail} from "../../Functions";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserContext } from '../../context/UserContext';
 
 export default() => {
     const navigation = useNavigation();
 
     const [email, setEmail] = useState('');
-    const [password, setPassWord] = useState('');
+    const [password, setPassword] = useState('');
 
     const [errorEmail, setErrorEmail] = useState('');
-    const [errorPassword, setErrorPassWord] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
 
-    const { dispatch: userDispatch } = useContext(UserContext);
 
     const handleSing = async () => {
     
        if(email != "" && email != null && password != "" && password != null){
             if(validateEmail(email)){
-                if(validatePassWord(password)){
+                if(validatePassword(password)){
                     
                     let res = await Api.signIn(email, password)
                     console.log(res)
@@ -52,7 +49,7 @@ export default() => {
                             { text : "Ok"}]);
                     }
                 }else{
-                    setErrorPassWord("Lembre! A senha deve ter 8 digitos contendo: uma letra maiuscula, uma minuscula, um numero e um caracter especial ")
+                    setErrorPassword("Lembre! A senha deve ter 8 digitos contendo: uma letra maiuscula, uma minuscula, um numero e um caracter especial ")
                 }
             }else{
                 setErrorEmail("Email incorreto")
@@ -61,7 +58,7 @@ export default() => {
            if(email == "" || email == null)
                 setErrorEmail("Digite seu e-mail")
             if(password == "" || email == null)
-                setErrorPassWord("Digite sua senha")
+                setErrorPassword("Digite sua senha")
        }
     }
 
@@ -70,15 +67,14 @@ export default() => {
     }
 
     const handleResetPass = () => {
-        navigation.navigate('ResetPass')
+        navigation.navigate('ForgetPassword')
     }
 
     return(
         <Container>
             <StatusBar/>
             <AreaWelcome>
-                <TitleWelcome>Bem vindo!</TitleWelcome>
-                <SvgLoading width = "240" heigth = "200"/>
+                <SvgLoading width = "280" heigth = "240"/>
             </AreaWelcome>
 
             <InputArea>
@@ -97,8 +93,8 @@ export default() => {
                     placeholder = "Senha"
                     value = {password}
                     onChangeText = { t => {
-                        setPassWord(t)
-                        setErrorPassWord(null)
+                        setPassword(t)
+                        setErrorPassword(null)
                     }}
                     password = {true}
                     maxLength = {8}

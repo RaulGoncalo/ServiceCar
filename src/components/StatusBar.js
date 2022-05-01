@@ -5,7 +5,7 @@ export default () => {
     return(
         <StatusBar
                hidden = {false}
-               backgroundColor = "#201B25"
+               backgroundColor = "#221f29"
                translucent = {false}
                networkActivityIndicatorVisible = {true}
             />

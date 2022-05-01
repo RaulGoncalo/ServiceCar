@@ -25,7 +25,7 @@ export default({navigation}) => {
    const handleSendClick = () => {
        if(email !=""){
             if(validateEmail(email)){
-                
+                //criar api de enviar email e validar
             }else{
                 setErrorEmail("Digite um e-mail válido")
             }
@@ -44,7 +44,7 @@ export default({navigation}) => {
                 </Header>
             </AreaHeader>
             <AreaForm>
-                <SubTitulo>Enviarémos um e-mail com a nova senha</SubTitulo>
+                <SubTitulo>Enviarémos um e-mail para você confirmar</SubTitulo>
                 
                 <Input 
                     placeholder = "E-mail"

@@ -11,6 +11,9 @@ export const AreaWelcome = styled.View`
     flex: 1;
     justify-content: center;
     align-items : center;
+
+    margin-top: 24px;
+    margin-bottom: 32px;
 `;
 
 export const TitleWelcome = styled.Text`

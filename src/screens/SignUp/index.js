@@ -11,14 +11,14 @@ import {
     AreaButton,
 } from './styles';
 
-import {useNavigation} from '@react-navigation/native';
+
 import StatusBar from "../../components/StatusBar";
 import { UserContext } from '../../context/UserContext';
 import Input from '../../components/Input';
 import Api from '../../Api';
 import { Alert } from 'react-native';
 import IconExit from '../../assets/fi-rr-arrow-small-left.svg';
-import {phoneMask, validateEmail, validatePassWord} from '../../Functions';
+import {phoneMask, validateEmail, validatePassword} from '../../Functions';
 
 export default({navigation}) => {
     const { dispatch: userDispatch } = useContext(UserContext);
@@ -26,24 +26,24 @@ export default({navigation}) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [password, setPassWord] = useState('');
-    const [confirmatioPassword, setConfirmationPassWord] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmatioPassword, setConfirmationPassword] = useState('');
 
     const [errorName, setErrorName] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPhone, setErrorPhone] = useState('');
-    const [errorPassword, setErrorPassWord] = useState('');
-    const [errorConfirmatioPassword, setErrorConfirmationPassWord] = useState(''); 
+    const [errorPassword, setErrorPassword] = useState('');
+    const [errorConfirmatioPassword, setErrorConfirmationPassword] = useState(''); 
 
     const handleSignClick = async () => {
         setErrorName(null)
         setErrorEmail(null)
-        setErrorPassWord(null)
-        setErrorConfirmationPassWord(null)
+        setErrorPassword(null)
+        setErrorConfirmationPassword(null)
         if (name != "" && email != "" && password != "" && confirmatioPassword != ""){
             if(validateEmail(email)){
                 if (password.length == 8){
-                    if(validatePassWord(password)){
+                    if(validatePassword(password)){
                         if(password == confirmatioPassword){
                             
                             let res = await Api.signUp(name, email, password, phone.replace(/[^0-9]/g,''))
@@ -65,13 +65,13 @@ export default({navigation}) => {
                                     { text : "Ok", onPress : () => navigation.navigate('SingIn')}]);
                             }
                         }else{
-                            setErrorConfirmationPassWord("Defina a mesma senha")
+                            setErrorConfirmationPassword("Defina a mesma senha")
                         }
                     }else{
-                        setErrorPassWord("A senha deve conter pelo menos 1 letra minúscula, 1 letra maiúscula, 1 número e 1 caractere especial")
+                        setErrorPassword("A senha deve conter pelo menos 1 letra minúscula, 1 letra maiúscula, 1 número e 1 caractere especial")
                     }
                 }else{
-                    setErrorPassWord("A senha deve conter 8 digitos")
+                    setErrorPassword("A senha deve conter 8 digitos")
                 }
             }else{
                 setErrorEmail("Preencha seu email corretamente")
@@ -82,9 +82,9 @@ export default({navigation}) => {
             if(email == '')
                 setErrorEmail("Preencha seu email")
             if(password == '')
-                setErrorPassWord("Preencha sua senha")
+                setErrorPassword("Preencha sua senha")
             if(confirmatioPassword == '')
-                setErrorConfirmationPassWord("Confirme sua senha")
+                setErrorConfirmationPassword("Confirme sua senha")
         }
     }
 
@@ -138,8 +138,8 @@ export default({navigation}) => {
                     placeholder = "Senha"
                     value = {password}
                     onChangeText = { t => {
-                        setPassWord(t)
-                        setErrorPassWord(null)
+                        setPassword(t)
+                        setErrorPassword(null)
                     }}
                     password = {true}
                     maxLength = {8}
@@ -149,8 +149,8 @@ export default({navigation}) => {
                     placeholder = "Confirmar senha"
                     value = {confirmatioPassword}
                     onChangeText = { t => {
-                        setConfirmationPassWord(t)
-                        setErrorConfirmationPassWord(null)
+                        setConfirmationPassword(t)
+                        setErrorConfirmationPassword(null)
                     }}
                     password = {true}
                     maxLength = {8}

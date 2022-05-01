@@ -4,24 +4,36 @@ import SvgLoading from '../../assets/svgLoading.svg'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import StatusBar from "../../components/StatusBar";
+import Api from '../../Api';
+import {alert} from 'react-native';
 
 export default() => {
 
     const navigation = useNavigation();
 
     useEffect(()=>{
-        const checkToken = async () => {
+        const checkLocationToken = async () => {
             const token = await AsyncStorage.getItem('token');
-            await AsyncStorage.removeItem('token');
-            
-            if(token){
-                //validar token
-            }else{
 
-                navigation.navigate('SingIn')
+            const res = await Api.checkToken(token);
+
+            if(token != null){
+                if(res.status == 200){
+                    navigation.reset({
+                        routes: [{name: 'MainTab'}]
+                    });
+                }else{
+                    navigation.reset({
+                        routes: [{name: 'SignIn'}]
+                    });
+                }
+            }else{
+                navigation.reset({
+                    routes: [{name: 'SignIn'}]
+                });
             }
         }
-        checkToken();
+        checkLocationToken();
     },)
 
     return(

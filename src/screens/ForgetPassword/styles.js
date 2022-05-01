@@ -10,7 +10,7 @@ export const AreaHeader = styled.View`
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: #201B25;
+    background-color: #221f29;
 
     elevation: 10;
 `;
