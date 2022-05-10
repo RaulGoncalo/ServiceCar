@@ -20,9 +20,11 @@ import SvgLoading from '../../assets/svgLogin.svg';
 import { useNavigation } from "@react-navigation/native";
 import {validatePassword, validateEmail} from "../../Functions";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext } from '../../context/UserContext';
 
 export default() => {
     const navigation = useNavigation();
+    const { dispatch: userDispatch } = useContext(UserContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -38,12 +40,20 @@ export default() => {
                 if(validatePassword(password)){
                     
                     let res = await Api.signIn(email, password)
-                    console.log(res)
 
                     if(!res.error){
                         await AsyncStorage.setItem('token', res.token);
-                        Alert.alert("Login ok: ","login feito com sucesso" , [
-                            { text : "Ok"}]);
+                        userDispatch({
+                            type: 'setUser',
+                            payload:{
+                                name: res.nomeCompleto,
+                                email: res.email,
+                                phone: res.phone
+                            }
+                        });
+                        navigation.reset({
+                            routes: [{name: 'MainTab'}]
+                        })
                     }else{
                         Alert.alert("Erro: ", res.error, [
                             { text : "Ok"}]);
@@ -60,14 +70,6 @@ export default() => {
             if(password == "" || email == null)
                 setErrorPassword("Digite sua senha")
        }
-    }
-
-    const handleSingUp = () => {
-        navigation.navigate('SingUp')
-    }
-
-    const handleResetPass = () => {
-        navigation.navigate('ForgetPassword')
     }
 
     return(
@@ -102,7 +104,7 @@ export default() => {
                 />
             
 
-                <SignMessageButtonForget onPress = {handleResetPass}>
+                <SignMessageButtonForget onPress = {() => navigation.navigate('ResetPassword')}>
                     <SignMessageButtonTextForget>Esqueceu a senha?</SignMessageButtonTextForget>
                 </SignMessageButtonForget>
 
@@ -115,7 +117,7 @@ export default() => {
 
 
             <InputAreaRegister >
-                <SignMessageButton onPress = {handleSingUp}>
+                <SignMessageButton onPress = {() => navigation.navigate('SignUp')}>
                     <SignMessageButtonText2>Cadastre-se</SignMessageButtonText2>
                 </SignMessageButton>
             </InputAreaRegister>

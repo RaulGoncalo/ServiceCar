@@ -10,6 +10,7 @@ export const Container = styled.View`
 
 export const Scroll = styled.ScrollView`
     padding: 20px;
+    margin-bottom: 20px;
 `;
 
 export const Title = styled.Text`
@@ -60,7 +61,7 @@ export const SelectionEspeciality = styled.View`
     border-bottom-color:  #FFF;
     border-radius: 32px;
 
-    margin:15px 0px 0px 0px;          
+    margin:15px 0px 64px 0px;          
 `;
 
 export const CustomPicker = styled(Picker)`

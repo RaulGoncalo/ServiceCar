@@ -40,26 +40,20 @@ export default () => {
         setIsVisibleFilter(!isVisibleFilter)
     }
 
-    const getCompanies = async () => {
-        const token =AsyncStorage.getItem('token')
+    useEffect(()=>{
+        getCompanies()
+    })
 
-        const res = await Api.getCompanies(token)
-        
-        console.log(res)
+    const getCompanies = async () => {
+        const token = await AsyncStorage.getItem('token');
+        const res = await Api.listCompanies(token);
 
         if(res.status == 201){
-            
              setCompanies(res.data)
              setLoading(false)
-        }else{
-            alert("Problemas ao buscar empresas")
         }
     }
 
-    useEffect(()=>{
-        getCompanies()
-        setLoading(true);
-    }, [])
 
     return(
         <Container>
@@ -76,7 +70,10 @@ export default () => {
 
                 <Filter 
                     onPress = {() => handleIsVisible()}
-                    style={{borderBottomColor: isVisibleFilter ? '#1E1923' : '#ff0043'}}
+                    style={{
+                        borderBottomColor: isVisibleFilter ? '#1E1923' : '#ff0043',
+                        marginBottom: isVisibleFilter ? 0 : 64
+                    }}
                 >
                     
                     <IconFilter width = "20px" height = "20px" fill = "#ff0043"/>
@@ -99,8 +96,8 @@ export default () => {
                            <CustomPicker
                                 selectedValue = {filter}
                                 onValueChange = {
-                                    (specialty) => {
-                                        setFilter(specialty)
+                                    (t) => {
+                                        setFilter(t)
                                         setLoading(true)
                                     }
                                 }
@@ -117,9 +114,13 @@ export default () => {
                         null
                     }
                     
-                    {loading && <IconLoading size = "large" color = "#fff" width = "28px" height = "28px"/> }
+                    {/*loading && <IconLoading size = "large" color = "#fff" width = "28px" height = "28px"/> */}
 
-                    <Card/>
+                    {
+                        companies.map((companie) =>{
+                            return <Card data = {companie} key ={companie.id}/>
+                        })
+                    }
                 
             </Scroll>
         </Container>

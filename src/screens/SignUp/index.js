@@ -59,10 +59,10 @@ export default({navigation}) => {
                                 });
                                 
                                 Alert.alert("Sucesso", "Faça Login", [
-                                    { text : "Ok", onPress : () => navigation.navigate('SingIn')}]);
+                                    { text : "Ok", onPress : () => navigation.navigate('SignIn')}]);
                             }else{
                                 Alert.alert("Erro", res.error, [
-                                    { text : "Ok", onPress : () => navigation.navigate('SingIn')}]);
+                                    { text : "Ok", onPress : () => navigation.navigate('SignIn')}]);
                             }
                         }else{
                             setErrorConfirmationPassword("Defina a mesma senha")
