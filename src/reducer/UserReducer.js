@@ -12,7 +12,7 @@ export const UserReducer = (state, action) => {
                 ...state, 
                 name: action.payload.name, 
                 email:action.payload.email, 
-                phone: action.payload.phone
+                phone: action.payload.phone,
             };
         break;
 

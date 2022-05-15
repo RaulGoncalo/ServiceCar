@@ -6,57 +6,9 @@ import Limpeza from '../assets/svgAvatar/svgLimpeza.svg';
 import Mecanica from '../assets/svgAvatar/svgMecanica.svg';
 import Pintura from '../assets/svgAvatar/svgPintura.svg';
 import Outros from '../assets/svgAvatar/svgOutros.svg';
-import IconGo from '../assets/corner-down-right';
-
-export default (props) => {
-    const specialty = props.data.specialty
-
-    return(
-        <Card>
-            <Svg>
-                {
-                    specialty == "Eletrica" ? <Eletrica width = "120" height = "120"fill = "#FFF"/> 
-                    : 
-                    specialty == "Funilaria" ? <Funilaria width = "120" height = "120" fill = "#FFF"/> 
-                    :
-                    specialty == "Limpeza" ? <Limpeza width = "120" height = "120" fill = "#FFF"/> 
-                    :
-                    specialty == "Mecanica" ? <Mecanica width = "120" height = "120" fill = "#FFF"/> 
-                    :
-                    specialty == "Pintura" ? <Pintura width = "120" height = "120" fill = "#FFF"/> 
-                    :
-                    specialty == "Outros" ? <Outros width = "120" height = "120" fill = "#FFF"/> 
-                    :
-                    null
-                }
-            </Svg>
-
-            <Infos>
-                <Title>
-                    {props.data.name}
-                </Title>
-
-                <TextInfos>
-                    {props.data.specialty}
-                </TextInfos>
-
-                <TextInfos>
-                    {props.data.email}
-                </TextInfos>
-
-                <TextInfos>
-                    {props.data.phone}
-                </TextInfos>
-            </Infos>
-
-            <Icon>
-                <AreaIcon>
-                    <IconGo  width = "32" height = "32"fill = "#FFF"/>
-                </AreaIcon>
-            </Icon>
-        </Card>
-    );
-}
+import IconGo from '../assets/fi-rr-undo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Api from '../Api';
 
 const Card = styled.View`
     background-color: #221f29;
@@ -67,6 +19,8 @@ const Card = styled.View`
 
     justify-content: flex-start;
     align-items: center;
+
+    border: 0.25px #000;
 
     padding: 8px;
 
@@ -89,10 +43,13 @@ const TextInfos = styled.Text`
 `;
 
 const Infos = styled.View`
+    width: 180px;
 `;
 
 const Icon = styled.View`
     flex-direction: column;
+    height: 100%;
+    display: flex;
     justify-content: flex-end;
     align-items: flex-end;
 `;
@@ -105,3 +62,64 @@ const AreaIcon = styled.TouchableOpacity`
 
 const Svg = styled.View`
 `;
+
+export default (props) => {
+    const specialty = props.data.especialidade
+
+
+    return(
+        <Card>
+            <Svg>
+                {
+                    specialty == "Eletrica" ? <Eletrica width = "120" height = "120"fill = "#FFF"/> 
+                    : 
+                    specialty == "Funilaria" ? <Funilaria width = "120" height = "120" fill = "#FFF"/> 
+                    :
+                    specialty == "Limpeza" ? <Limpeza width = "120" height = "120" fill = "#FFF"/> 
+                    :
+                    specialty == "Mecânica" ? <Mecanica width = "120" height = "120" fill = "#FFF"/> 
+                    :
+                    specialty == "Pintura" ? <Pintura width = "120" height = "120" fill = "#FFF"/> 
+                    :
+                    <Outros width = "120" height = "120" fill = "#FFF"/>
+                }
+            </Svg>
+
+            <Infos>
+                <Title>
+                    {props.data.nomeEmpresa}
+                </Title>
+
+                <TextInfos>
+                    {props.data.especialidade}
+                </TextInfos>
+
+                <TextInfos>
+                    {props.data.cidade}
+                </TextInfos>
+
+                <TextInfos>
+                    {props.data.email}
+                </TextInfos>
+
+                <TextInfos>
+                    {props.data.telefone}
+                </TextInfos>
+            </Infos>
+
+            <Icon>
+                <AreaIcon 
+                    onPress= {
+                        () => {
+                            props.showModal();
+                            props.setData();
+                        }
+                    }
+                >
+                    <IconGo  width = "32" height = "32"fill = "#FFF"/>
+                </AreaIcon>
+            </Icon>
+        </Card>
+    );
+}
+

@@ -3,17 +3,16 @@ import styled from 'styled-components/native';
 
 import HomeIcon from '../assets/fi-rr-home.svg'
 import CalendarIcon from '../assets/fi-rr-calendar.svg'
-import StarIcon from '../assets/fi-rr-star.svg'
+import SearchIcon from '../assets/fi-rr-search.svg'
 
 import HomeFilledIcon from '../assets/homeFilled.svg'
 import CalendarFilledIcon from '../assets/calendarFilled.svg'
-import StarFilledIcon from '../assets/starFilled.svg'
-import Home from "../screens/Home";
+import SearchFilledIcon from '../assets/fi-rr-search.svg'
+
 
 const TabArea = styled.View`
     height: 60px;
     background-color: #221f29;
-    elevation: 10;
     flex-direction: row;
 `;
 const TabItem = styled.TouchableOpacity`
@@ -31,23 +30,23 @@ export default ({state, navigation}) => {
     return(
         <TabArea>
             
-            <TabItem  onPress = {() => goTo('Favorites')}>
+            <TabItem  onPress = {() => goTo('Home')}>
                 {
                     state.index === 0 
                     ? 
-                    <StarFilledIcon width = "25" height = "25"fill = "#FF0043"/>
-                    :
-                    <StarIcon  width = "23" height = "23"fill = "#FF0043"/>
-                }
-            </TabItem>
-
-            <TabItem onPress = {() => goTo('Home')}>
-                {
-                    state.index === 1 
-                    ?
                     <HomeFilledIcon width = "25" height = "25"fill = "#FF0043"/>
                     :
                     <HomeIcon  width = "23" height = "23"fill = "#FF0043"/>
+                }
+            </TabItem>
+
+            <TabItem onPress = {() => goTo('Search')}>
+                {
+                    state.index === 1 
+                    ?
+                    <SearchFilledIcon width = "25" height = "25"fill = "#FF0043" stroke-width = "4.5"/>
+                    :
+                    <SearchIcon  width = "23" height = "23"fill = "#FF0043"/>
                 }
             </TabItem>
 

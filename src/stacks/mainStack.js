@@ -1,12 +1,12 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Platform } from 'react-native';
-
 import Loading from '../screens/Loading';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import ResetPassword from '../screens/ResetPassword';
-import MainTab from '../stacks/MainTab';
+import MainTab from './MainTab';
+import ModalServices from '../screens/ModalServices';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +15,10 @@ export default() => {
     return(
         <Stack.Navigator
             initialRouteName = "Loading"
-            screenOptions = {{headerShown : false}}
+            screenOptions = {{
+                headerShown : false,
+                animation: 'default',
+            }}
             
         >
             <Stack.Screen 
@@ -37,6 +40,7 @@ export default() => {
                 component={ResetPassword}
             />
             
+
             <Stack.Screen 
                 name = "MainTab" 
                 component = {MainTab}
@@ -46,7 +50,6 @@ export default() => {
                     }
                 } 
             />
-
         </Stack.Navigator> 
     );
 }

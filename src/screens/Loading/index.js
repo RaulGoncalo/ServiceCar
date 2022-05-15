@@ -17,31 +17,35 @@ export default() => {
             const token = await AsyncStorage.getItem('token');
 
             if(token !== undefined && token !== null && token !== ''){
-
                 const res = await Api.checkToken(token);
+
                 if(res.status === 200){
 
                     const resJson = await res.json()
+                    
                     userDispatch({
                         type: 'setUser',
                         payload:{
                             name: resJson.name,
                             email: resJson.email,
-                            phone: resJson.phone
+                            phone: resJson.phone,
                         }
                     });
 
                     navigation.reset({
+                        index: 0,
                         routes: [{name: 'MainTab'}]
                     });
                     
                 }else{
                     navigation.reset({
+                        index: 0,
                         routes: [{name: 'SignIn'}]
                     });
                 }
             }else{
                 navigation.reset({
+                    index: 0,
                     routes: [{name: 'SignIn'}]
                 });
             }

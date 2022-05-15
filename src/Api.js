@@ -1,4 +1,4 @@
-const BASE_API = 'http://192.168.43.47:3000';
+const BASE_API = 'http://192.168.0.6:3000';
 
 export default {
     checkToken: async(token) => {
@@ -59,9 +59,9 @@ export default {
         return json;
     },
 
-    listCompanies: async (token, specialty) =>{
+    companies: async (token, specialty) =>{
 
-        const req = await fetch(`${BASE_API}/getEmpresa`, {
+        const req = await fetch(`${BASE_API}/getEmpresas/${specialty}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -69,9 +69,8 @@ export default {
                 'Authorization': `${token}`,
             }
         });
-        console.log(req)
+        
         return req;
-
     },
 
     requestCode: async (email) =>{
@@ -112,4 +111,32 @@ export default {
         return req;
     },
 
+    favorite: async (token, idCompanie) =>{
+        const req = await fetch(`${BASE_API}/favorites`,{
+            method: 'POST',
+            headers:{
+                Accept: 'application/json',
+                'Content-type': 'application/json',
+                'Authorization': `${token}`,
+            },
+            body: JSON.stringify({idCompanie})
+        })
+
+        return req;
+    },
+
+    deleteFavorite: async (token, idCompanie) =>{
+        const req = await fetch(`${BASE_API}/deleteFavorite`,{
+            method: 'DELETE',
+            headers:{
+                Accept: 'application/json',
+                'Content-type': 'application/json',
+                'Authorization': `${token}`,
+            },
+            body: JSON.stringify({idCompanie})
+        })
+
+        return req;
+    },
+    
 }

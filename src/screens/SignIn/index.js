@@ -40,7 +40,7 @@ export default() => {
                 if(validatePassword(password)){
                     
                     let res = await Api.signIn(email, password)
-
+                    console.log(res)
                     if(!res.error){
                         await AsyncStorage.setItem('token', res.token);
                         userDispatch({
