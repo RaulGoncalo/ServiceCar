@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import IconDollar from '../assets/fi-rr-dollar'
+import IconDollar from '../assets/fi-rr-dollar';
 
 const Card = styled.View`
     width: 100%;
@@ -15,7 +15,7 @@ const Card = styled.View`
 `;
 
 const Title = styled.Text`
-    font-weight: 500;
+    font-weight: 700;
     font-size: 16px;
     color: #fff;
     margin:0px 0px 0px 0px;
@@ -55,16 +55,23 @@ export default (props) => {
     return(
         <Card>
             <Infos>
-                <Title>{props.data.nameService}</Title>
+                <Title> {props.data.service}</Title>
                 <AreaValue>
                     <IconDollar width = '18' height = '18' fill = "#ff0043"/>
                     <TextInfo>
-                        {props.data.value}
+                        {props.data.price}
                     </TextInfo> 
                 </AreaValue>
             </Infos>
             
-            <ButtonToSchedule>
+            <ButtonToSchedule
+               onPress= {
+                () => {
+                    props.setData();
+                    props.showModal();
+                }
+            }
+            >
                 <TextInfo>
                     Agendar
                 </TextInfo>

@@ -5,8 +5,6 @@ import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import ResetPassword from '../screens/ResetPassword';
 import MainTab from './MainTab';
-import ModalServices from '../screens/ModalServices';
-
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +38,7 @@ export default() => {
                 component={ResetPassword}
             />
             
-
+            
             <Stack.Screen 
                 name = "MainTab" 
                 component = {MainTab}
@@ -50,6 +48,7 @@ export default() => {
                     }
                 } 
             />
+
         </Stack.Navigator> 
     );
 }

@@ -51,7 +51,7 @@ export default() => {
             }
         }
         checkLocationToken();
-    },)
+    },[])
 
     return(
         <Container>

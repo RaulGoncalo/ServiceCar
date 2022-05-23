@@ -2,6 +2,7 @@ export const initialState = {
     name: '',
     email:'',
     phone: '',
+    favorites: [''],
 };
 //grade de ações
 export const UserReducer = (state, action) => {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Container,
     AreaHeader,
@@ -17,7 +17,7 @@ import IconDown from '../../assets/chevron-down';
 import IconUp from '../../assets/chevron-up';
 import StatusBar from '../../components/StatusBar';
 import Card from '../../components/Card';
-import ModalService from '../ModalServices';
+import ModalServices from '../../components/ModalServices';
 import Api from '../../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RefreshControl} from 'react-native';
@@ -29,7 +29,8 @@ export default () => {
     const [refreshing, setRefreshing] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [listComponies, setListCompanies] = useState([]);
-    const [companieSelected, setCompanieSelected] =useState('');
+    const [companieSelected, setCompanieSelected] =useState([]);
+    
 
     const data = [
         'Elétrica',
@@ -49,7 +50,7 @@ export default () => {
         const res = await Api.companies(token, filter);
 
         if(res.status === 200){
-            const json = await res.json() 
+            const json = await res.json()
             setListCompanies(json.data)
         }else{
             alert("Ocorreu um problema")
@@ -71,8 +72,6 @@ export default () => {
     
     return(
         <Container>
-            
-
             <StatusBar/>
             <AreaHeader>
                 <Title>
@@ -135,7 +134,7 @@ export default () => {
                     {
                         listComponies.map((companie) =>{
                             return <Card 
-                                        data = {companie} 
+                                        data = {companie}
                                         key ={companie.id} 
                                         showModal = {toggleModal} 
                                         setData = {() => setCompanieSelected(companie)}
@@ -144,8 +143,8 @@ export default () => {
                     }
                 
             </Scroll>
-            
-            <ModalService 
+
+            <ModalServices 
                 modalActive = {isModalVisible} 
                 modalCancel ={() => setModalVisible(false)} 
                 data = {companieSelected}

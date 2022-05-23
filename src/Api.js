@@ -1,4 +1,4 @@
-const BASE_API = 'http://192.168.0.6:3000';
+const BASE_API = 'http://192.168.0.4:3000';
 
 export default {
     checkToken: async(token) => {
@@ -111,6 +111,34 @@ export default {
         return req;
     },
 
+    services: async (token, idCompanie) =>{
+
+        const req = await fetch(`${BASE_API}/getServices/${idCompanie}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json',
+                'Authorization': `${token}`,
+            }
+        });
+        
+        return req;
+    },
+
+    getfavorites: async (token, idCompanie) =>{
+
+        const req = await fetch(`${BASE_API}/getFavorites/${idCompanie}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json',
+                'Authorization': `${token}`,
+            }
+        });
+        
+        return req;
+    },
+
     favorite: async (token, idCompanie) =>{
         const req = await fetch(`${BASE_API}/favorites`,{
             method: 'POST',
@@ -138,5 +166,32 @@ export default {
 
         return req;
     },
+
+    getHoursService: async (token, data) =>{
+
+        const req = await fetch(`${BASE_API}/getHoursService/idEmpresa=${data.idCompanie}/idServico=${data.idService}/data=${data.date}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json',
+                'Authorization': `${token}`,
+            }
+        });
+        
+        return req;
+    },
     
+    saveSchedule : async (token, data) =>{
+        const req = fetch(`${BASE_API}/saveSchedule`,{
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json',
+                'Authorization': `${token}`
+            },
+            body: JSON.stringify({data}),
+        });
+
+        return req;
+    },
 }

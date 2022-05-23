@@ -66,12 +66,11 @@ const Svg = styled.View`
 export default (props) => {
     const specialty = props.data.especialidade
 
-
     return(
         <Card>
             <Svg>
                 {
-                    specialty == "Eletrica" ? <Eletrica width = "120" height = "120"fill = "#FFF"/> 
+                    specialty == "Elétrica" ? <Eletrica width = "120" height = "120"fill = "#FFF"/> 
                     : 
                     specialty == "Funilaria" ? <Funilaria width = "120" height = "120" fill = "#FFF"/> 
                     :
@@ -111,8 +110,8 @@ export default (props) => {
                 <AreaIcon 
                     onPress= {
                         () => {
-                            props.showModal();
                             props.setData();
+                            props.showModal();
                         }
                     }
                 >
