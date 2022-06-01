@@ -20,8 +20,6 @@ const Card = styled.View`
     justify-content: flex-start;
     align-items: center;
 
-    border: 0.25px #000;
-
     padding: 8px;
 
     margin-bottom: 24px;

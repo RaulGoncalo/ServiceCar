@@ -14,7 +14,9 @@ import IconClose from '../assets/fi-rr-angle-down';
 import StarFilled from '../assets/starFilled';
 import Api from '../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ModalSchedule from './ModalSchedule';
+
+import Modal from '../components/Modal';
+import ModalContentSchedule from './ModalContentSchedule';
 
 
 const Body = styled.View`
@@ -95,7 +97,7 @@ const IconLoading = styled.ActivityIndicator`
 
 
 export default (props) => {
-    const [specialty, setSpecialty] = useState(props.data.specialty)
+    const specialty = props.data.specialty
     
     const [isLoading, setIsloading] = useState();
     const [isFavorite, setIsFavorite] = useState();
@@ -157,11 +159,8 @@ export default (props) => {
         }
     }
 
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-    };
-
     return(
+        
         <Body>
             <Close>
                 <AreaIconClose onPress = {()=> props.onRequestClose()}>
@@ -221,17 +220,22 @@ export default (props) => {
                                 return <CardService 
                                     key = {index} 
                                     data = {item}
-                                    showModal = {toggleModal}
+                                    showModal = {() => setModalVisible(!isModalVisible)}
                                     setData = {() => setData(item)}
                                 />
                             })
                         }
                 </Sevices>
             }
-            <ModalSchedule 
+
+            <Modal 
                 modalActive = {isModalVisible} 
                 modalCancel ={() => setModalVisible(false)} 
-                data = {data}
+                children = {
+                    <ModalContentSchedule  
+                    service = {data} 
+                    onRequestClose = {() => setModalVisible(false)}
+                />}
             />
         
         </Body>

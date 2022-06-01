@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
+import {RefreshControl} from 'react-native';
 import {
     Container,
     AreaHeader,
-    AreaIcon,
     Scroll,
     Title,
     Filter,
@@ -17,10 +17,12 @@ import IconDown from '../../assets/chevron-down';
 import IconUp from '../../assets/chevron-up';
 import StatusBar from '../../components/StatusBar';
 import Card from '../../components/Card';
-import ModalServices from '../../components/ModalServices';
+
+import Modal from '../../components/Modal';
+import ModalContentServices from '../../components/ModalContentServices';
+
 import Api from '../../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {RefreshControl} from 'react-native';
 
 export default () => {
     const [isVisibleFilter, setIsVisibleFilter] = useState(false);
@@ -38,10 +40,6 @@ export default () => {
         'Mecânica',
         'Pintura',
     ]
-
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-      };
 
    async function getlistComponies  () {
         setIsloading(true)
@@ -136,7 +134,7 @@ export default () => {
                             return <Card 
                                         data = {companie}
                                         key ={companie.id} 
-                                        showModal = {toggleModal} 
+                                        showModal = {() => setModalVisible(!isModalVisible)} 
                                         setData = {() => setCompanieSelected(companie)}
                                     />
                         })
@@ -144,11 +142,12 @@ export default () => {
                 
             </Scroll>
 
-            <ModalServices 
+            <Modal 
                 modalActive = {isModalVisible} 
                 modalCancel ={() => setModalVisible(false)} 
-                data = {companieSelected}
+                children = {<ModalContentServices  data = {companieSelected} onRequestClose = {() => setModalVisible(false)}/>}
             />
+
         </Container>
     );
 }

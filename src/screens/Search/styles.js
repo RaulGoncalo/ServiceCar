@@ -18,8 +18,7 @@ export const Title = styled.Text`
     font-weight: bold;
     font-size: 22px;
     color: #fff;
-    margin:0px 32px 0px 0px;
-
+    margin:0px 0px 0px 16px;
 `;
 
 export const AreaHeader = styled.View`
@@ -30,13 +29,6 @@ export const AreaHeader = styled.View`
     
     height: 80px;
     elevation: 10;
-`;
-
-export const AreaIcon = styled.TouchableOpacity`
-    margin-top: 20px;
-    margin-bottom:20px;
-    margin-left: 24px;
-    flex-direction: row;
 `;
 
 export const Filter = styled.TouchableOpacity`

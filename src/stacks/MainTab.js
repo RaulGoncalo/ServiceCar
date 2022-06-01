@@ -17,7 +17,7 @@ export default () => {
               }}
                 
         >
-            <Tab.Screen name = 'Home' component = {Home}/>
+             <Tab.Screen name = 'Home' component = {Home}/>
             <Tab.Screen name = 'Search' component = {Search}/>
             <Tab.Screen name = 'Schedule' component = {Schedule}/>
         </Tab.Navigator>

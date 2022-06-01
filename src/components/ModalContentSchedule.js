@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Alert} from 'react-native';    
 import styled from 'styled-components/native';
 import IconDollar from '../assets/fi-rr-dollar';
 import IconNext from '../assets/fi-rr-angle-small-right';
@@ -89,7 +90,7 @@ const AreaMonthTitle = styled.View`
     margin: 0px 15px 0px 15px;
 `;
 
-const AreaDay = styled.ScrollView`
+const Scroll = styled.ScrollView`
 `;
 
 const ButtonSelectDay = styled.TouchableOpacity`
@@ -159,11 +160,6 @@ const HourTitle = styled.Text`
     margin-bottom: 10px;
 `;
 
-
-const ScrollHour = styled.ScrollView`
-    
-`;
-
 const HourItem = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
@@ -217,22 +213,34 @@ const days = [
 export default ({service, onRequestClose}) => {
     const navigation = useNavigation();
 
-    const [selectedYear, setSelectedYear] = useState(0);
-    const [ currentYear, setCurruntYear] =useState(0);
+    const [selectedYear, setSelectedYear] = useState();
+    const [selectedMonth, setSelectedMonth] = useState();
+    const [selectedDay, setSelectedDay] = useState();
 
-    const [selectedMonth, setSelectedMonth] = useState(0);
-    const [ currentMonth, setCurruntMonth] =useState(0);
-
-    const [selectedDay, setSelectedDay] = useState(0);
-    const [selectedHour, setSelectedHou] = useState(null);
     
+    const [ currentYear, setCurruntYear] =useState();
+    const [ currentMonth, setCurruntMonth] =useState();
+
     const [listDays, setListDay] = useState([]);
     const [listHours, setListHours] = useState([]); 
 
+    const [selectedHour, setSelectedHour] = useState(null);
+    
     const [isLoading, setIsloading] = useState(false);
 
-    const [error, setError] = useState('');
 
+    useEffect(() => {
+        let today = new Date();
+
+        setSelectedYear(today.getFullYear());
+        setSelectedMonth(today.getMonth());
+        setSelectedDay( today.getDay());
+
+        setCurruntYear(today.getFullYear());
+        setCurruntMonth(today.getMonth());
+    }, [service])
+
+    
     useEffect(() =>{
         
         let daysAvailable = new Array()
@@ -240,12 +248,13 @@ export default ({service, onRequestClose}) => {
         for(let i = parseInt(service.fromday); i <= service.today; i++){
             daysAvailable.push(i);
         }
-
         if(service.daysservice){
+            setListDay([])
+
             let dayIsMonth = new Date(selectedYear, selectedMonth +1, 0).getDate();
             let newListDay = [];
 
-            let monthOfToday = new Date().getMonth()
+            let monthOfToday = new Date().getMonth();
             let todaySDay = new Date().getDate();
 
             
@@ -259,18 +268,11 @@ export default ({service, onRequestClose}) => {
                 isValid = false;
 
                 let monthUnavailable  = selectedMonth < 10 ? '0'+(selectedMonth) : selectedMonth;
-                let dayUnavailable = i < 10 ? '0'+1 : i;
+                let dayUnavailable = i < 10 ? '0'+i : i;
                 let unavailableDaysFront = selectedYear + "-" + monthUnavailable + "-" + dayUnavailable
 
-                for(let l = 1; l <= daysAvailable.length; l++){
-                    if(l === day){
-                        isValid = true
-                        break;
-                    }  
-                }
-
                 newListDay.push({
-                    status: service.unavailableDays.find((item) => item === unavailableDaysFront) ? false : isValid,
+                    status:  daysAvailable.find((item)=> item === d.getDay()) !== undefined && service.unavailableDays.find((item) => item === unavailableDaysFront) === undefined? true : false,
                     weekDay: days[day],
                     dayNumber: i,
                 });
@@ -278,12 +280,13 @@ export default ({service, onRequestClose}) => {
             };
 
             setListDay(newListDay);
-            setListHours([])
-            setSelectedDay(0)
+            setSelectedDay(0);
+            setListHours([]);
         }
     },[service, selectedMonth, selectedYear])
 
     useEffect( ()=>{
+        setListHours([])
         const getListhour = async () =>{
             if(service && selectedDay > 0){
                 setIsloading(true)
@@ -293,7 +296,7 @@ export default ({service, onRequestClose}) => {
                 const data = {
                     idCompanie: service.idempresa,
                     idService: service.idservico,
-                    date: selectedYear + "-" + selectedMonth + "-" + selectedDay
+                    date: `${selectedYear}-${selectedMonth+1}-${selectedDay}`, 
                 }
 
                 const res = await Api.getHoursService(token, data)
@@ -301,6 +304,7 @@ export default ({service, onRequestClose}) => {
                 if(res.status === 201){
                     setIsloading(false);
                     const json = await res.json();
+                    setSelectedHour(null)
                     setListHours(json.horarios);
                 }else{
                     alert("Erro ao buscar as informações")
@@ -311,19 +315,6 @@ export default ({service, onRequestClose}) => {
 
         getListhour();
     }, [service, selectedDay])
-
-    useEffect(() => {
-        let today = new Date();
-
-        setSelectedYear(today.getFullYear());
-        setCurruntYear(today.getFullYear());
-
-        setCurruntMonth(today.getMonth())
-        setSelectedMonth(today.getMonth());
-
-        setSelectedDay( today.getDay());
-
-    }, [])
 
     const handleLeftDateClick = () =>{
         let mountDate = new Date(selectedYear, selectedMonth, 1);
@@ -346,17 +337,16 @@ export default ({service, onRequestClose}) => {
         const data = {
             idCompanie: service.idempresa,
             idService: service.idservico,
-            date: selectedYear + "-" + selectedMonth + "-" + selectedDay,
+            date: `${selectedYear}-${selectedMonth+1}-${selectedDay}`, 
             hourSchedule: selectedHour,
         }
 
         if(selectedDay && selectedHour){
-
             const res = await Api.saveSchedule(token, data);
 
             if(res.status === 201){
                 onRequestClose()
-                alert("Agendamento realizado")
+                Alert.alert("Agendamento","Agendamento realizado", [{ text : "Ok", onPress : () => navigation.navigate('Schedule')}]);
             }else{
                 alert("Problema ao agendar")
                 onRequestClose()
@@ -375,7 +365,7 @@ export default ({service, onRequestClose}) => {
             </Close>
 
             <HeaderService>
-                <Title>
+                <Title numberOflines = {2}>
                     {service.service}
                 </Title>
 
@@ -411,8 +401,9 @@ export default ({service, onRequestClose}) => {
                     </AreaIconNext>
                 </AreaMonth>
 
-                <AreaDay horizontal = {true} showsHorizontalScrollIndicator = {false}>
+                <Scroll horizontal = {true} showsHorizontalScrollIndicator = {false}>
                     {
+                        listDays ?
                         listDays.map((item, key)=>{
                             return <ButtonSelectDay 
                                     key = {key} 
@@ -432,9 +423,11 @@ export default ({service, onRequestClose}) => {
                                     </Day>
                             </ButtonSelectDay>
                         })
+                        :
+                        <></>
                     }
                     
-                </AreaDay>
+                </Scroll>
             </AreaDate>
             
             {
@@ -444,17 +437,17 @@ export default ({service, onRequestClose}) => {
                 :
                 <AreaHour>
                         <HourTitle>
-                            {listHours.length > 0 ? "Horários disponíveis" : "Selecione um dia"}
+                            {listHours ? "Horários disponíveis" : "Selecione um dia"}
                         </HourTitle>
-                    <ScrollHour horizontal = {true} showsHorizontalScrollIndicator = {false}>
+                    <Scroll horizontal = {true} showsHorizontalScrollIndicator = {false}>
                         {
                     
-                            listHours ?
+                           selectedDay > 0 && listHours.length > 0 ?
                                     listHours.map((item, key) => {
                                         return (
                                             <HourItem 
                                                 key = {key} 
-                                                onPress = {() =>{setSelectedHou(item)}}
+                                                onPress = {() =>{setSelectedHour(item)}}
                                                 style = {{
                                                     backgroundColor: item === selectedHour ? "#ff0043" : null
                                                 }}
@@ -470,7 +463,7 @@ export default ({service, onRequestClose}) => {
                             :
                             <></>
                         }
-                    </ScrollHour>
+                    </Scroll>
                 </AreaHour>
             }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, TouchableWithoutFeedback } from 'react-native';
-import ModalContentSchedule from './ModalContentSchedule';
 import styled from 'styled-components/native';
 
 const OutsideModal = styled.View`
@@ -12,13 +11,10 @@ const OutsideModal = styled.View`
 `;
 
 const InsideModal = styled.View`
-    width: 95%;
-    min-height: 240px;
-    max-height: 640px;
+    height: 100%;
+    width: 100%;
     padding: 10px;
     background-color: #221f29;
-    border-top-right-radius :  16px;
-    border-top-left-radius :  16px;
 `;
 
 export default (props) => {
@@ -34,7 +30,7 @@ export default (props) => {
                 <OutsideModal>
                     <TouchableWithoutFeedback>
                         <InsideModal>
-                           <ModalContentSchedule service = {props.data} onRequestClose = {props.modalCancel}/>
+                           {props.children}
                         </InsideModal>
                     </TouchableWithoutFeedback>
                 </OutsideModal>

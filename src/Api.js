@@ -182,7 +182,7 @@ export default {
     },
     
     saveSchedule : async (token, data) =>{
-        const req = fetch(`${BASE_API}/saveSchedule`,{
+        const req = await fetch(`${BASE_API}/saveSchedule`,{
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -190,6 +190,46 @@ export default {
                 'Authorization': `${token}`
             },
             body: JSON.stringify({data}),
+        });
+
+        return req;
+    },
+
+
+    getScheduleds: async (token) =>{
+        const req =  await fetch(`${BASE_API}/getSchedule`,{
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json',
+                'Authorization': `${token}`,
+            }
+        });
+
+        return req;
+    },
+
+    cancelSchedule: async (token, idSchedule) => {
+        const req = fetch(`${BASE_API}/deleteSchedule/${idSchedule}`,{
+            method: 'DELETE',
+            headers:{
+                Accept: 'application/json',
+                'Content-type': 'application/json',
+                'Authorization': `${token}`,
+            }
+        });
+
+        return req
+    },
+
+    getListFavorites: async (token) =>{
+        const req =  await fetch(`${BASE_API}/getListFavorites`,{
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json',
+                'Authorization': `${token}`,
+            }
         });
 
         return req;

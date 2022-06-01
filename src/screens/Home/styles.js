@@ -6,9 +6,20 @@ export const Container = styled.View`
     flex: 1;
 `;
 
+export const BodyListFavorites = styled.ScrollView`
+    padding: 20px;
+`;
+
 export const Title = styled.Text`
     font-weight: bold;
     font-size: 24px;
+    color: #fff;
+    margin-left: 10px;
+`;
+
+export const Subtitle = styled.Text`
+    font-weight: 400;
+    font-size: 18px;
     color: #fff;
     margin-left: 10px;
 `;

@@ -30,6 +30,7 @@ const TextInfo = styled.Text`
 
 
 const Infos = styled.View`
+    max-width: 250px;
 `;
 
 const AreaValue = styled.View`
@@ -55,7 +56,13 @@ export default (props) => {
     return(
         <Card>
             <Infos>
-                <Title> {props.data.service}</Title>
+                <Title numberOflines = {1}> 
+                {
+                    props.data.service.length < 20 ?
+                    props.data.service :
+                    `${props.data.service.substring(0, 20)}...`
+                }
+                </Title>
                 <AreaValue>
                     <IconDollar width = '18' height = '18' fill = "#ff0043"/>
                     <TextInfo>

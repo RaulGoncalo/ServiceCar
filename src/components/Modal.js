@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, TouchableWithoutFeedback } from 'react-native';
-import ModalContentServices from './ModalContentServices';
 import styled from 'styled-components/native';
 
 const OutsideModal = styled.View`
@@ -34,7 +33,7 @@ export default (props) => {
                 <OutsideModal>
                     <TouchableWithoutFeedback>
                         <InsideModal>
-                            <ModalContentServices data = {props.data} onRequestClose = {props.modalCancel}/>
+                           {props.children}
                         </InsideModal>
                     </TouchableWithoutFeedback>
                 </OutsideModal>
