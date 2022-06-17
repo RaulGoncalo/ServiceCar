@@ -5,6 +5,8 @@ import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import ResetPassword from '../screens/ResetPassword';
 import MainTab from './MainTab';
+import ChangeData from '../screens/ChangeData';
+import ChangePassword from '../screens/ChangePassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +38,16 @@ export default() => {
             <Stack.Screen 
                 name = "ResetPassword" 
                 component={ResetPassword}
+            />
+
+            <Stack.Screen 
+                name = "ChangeData" 
+                component={ChangeData}
+            />
+            
+            <Stack.Screen 
+                name = "ChangePassword" 
+                component={ChangePassword}
             />
             
             

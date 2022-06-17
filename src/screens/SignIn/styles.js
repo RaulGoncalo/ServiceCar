@@ -34,7 +34,7 @@ export const SubTitle = styled.Text`
 
 export const CustomButton = styled.TouchableOpacity`
     height: 55px;
-    background-color: rgb(228, 16, 93);
+    background-color: #ff0043;
     border-radius: 8px;
     justify-content: center;
     align-items : center;
@@ -83,3 +83,7 @@ export const SignMessageButtonText2 = styled.Text`
     font-family: 'Poppins-Bold';
 `;
 
+export const IconLoading = styled.ActivityIndicator`
+    margin: 30px 0px 30px 0px;
+    
+`;

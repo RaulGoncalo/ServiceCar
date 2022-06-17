@@ -14,7 +14,7 @@ export const Title = styled.Text`
     font-weight: bold;
     font-size: 24px;
     color: #fff;
-    margin-left: 10px;
+    margin: 20px 10px 10px 20px;
 `;
 
 export const Subtitle = styled.Text`

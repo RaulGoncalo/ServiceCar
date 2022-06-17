@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, Alert } from 'react-native';
 import {
     Container,
     Title,
@@ -20,7 +20,8 @@ import ModalProfile from './ModalHome/ModalProfile';
 import ModalContentProfile from './ModalHome/ModalContentProfile';
 
 
-export default () => {
+export default ({navigation}) => {
+
 
     const [modalProfileVisible, setModalProfileVisible] = useState(false);
     const [isModalCompanieVisible, setIsModalCompanieVisible] = useState(false);
@@ -48,6 +49,22 @@ export default () => {
         getListFavorites()
     }
 
+    const handleLogout = () =>{
+        Alert.alert("Sair?", "Deseja realmente sair?", 
+        [
+            {
+                text: "Cancel",
+                style: "cancel"
+              },
+              { text: "OK", onPress: async () => {
+                await AsyncStorage.removeItem('token');
+                navigation.reset({
+                    routes: [{name: 'SignIn'}]
+                })
+              } }
+        ]);
+    }
+
     useEffect(() => {
         getListFavorites();
     }, [])
@@ -61,8 +78,13 @@ export default () => {
                 </AreaIcon>
             </AreaHeader>
 
+            {
+                listFavorites.length > 0 ? <Title>Favoritos</Title> : <Title>Nenhum favorito</Title>
+            }
+
             <BodyListFavorites refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 {
+                    
                     listFavorites.map((companie) =>{
                         return <Card 
                                     data = {companie}
@@ -77,7 +99,7 @@ export default () => {
             <ModalProfile
                     modalActive={modalProfileVisible}
                     modalCancel={() => setModalProfileVisible(false)}
-                    children = {<ModalContentProfile onRequestClose = {() => setModalProfileVisible(false)}/>}
+                    children = {<ModalContentProfile onRequestClose = {() => setModalProfileVisible(false)} logout = {handleLogout}/>}
             />
 
             <Modal 

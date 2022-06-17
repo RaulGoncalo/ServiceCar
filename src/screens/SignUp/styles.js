@@ -50,7 +50,7 @@ export const AreaButton = styled.View`
 
 export const CustomButton = styled.TouchableOpacity`
     height: 55px;
-    background-color: rgb(228, 16, 93);
+    background-color: #ff0043;
     border-radius: 8px;
     justify-content: center;
     align-items : center;
@@ -63,4 +63,9 @@ export const CustomButtonText = styled.Text`
     font-size: 20px;
     font-family: 'poppins-regular';
     color: #fff;
+`;
+
+export const IconLoading = styled.ActivityIndicator`
+    margin: 30px 0px 30px 0px;
+    
 `;

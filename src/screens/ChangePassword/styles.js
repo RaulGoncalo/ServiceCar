@@ -64,7 +64,3 @@ export const CustomButtonText = styled.Text`
     font-family: 'poppins-regular';
     color: #fff;
 `;
-
-export const IconLoading = styled.ActivityIndicator`
-    margin-top: 86px;
-`;

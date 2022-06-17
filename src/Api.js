@@ -1,4 +1,4 @@
-const BASE_API = 'http://192.168.0.4:3000';
+const BASE_API = 'http://192.168.0.8:3000';
 
 export default {
     checkToken: async(token) => {
@@ -40,9 +40,7 @@ export default {
             body: JSON.stringify({name, email, password, phone})
         }
         )
-        const json = await req.json();
-
-        return json;
+        return req;
     },
 
     resetPass: async(email) => {
